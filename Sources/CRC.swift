@@ -11,8 +11,7 @@ public struct CRC<Value: FixedWidthInteger> {
     // MARK: Stored Properties
 
     public let initialValue: Value
-    public let refIn: Bool
-    public let refOut: Bool
+    public let reflected: Bool
     public let xorOut: Value
 
     public let lookupTable: [Value]
@@ -22,19 +21,17 @@ public struct CRC<Value: FixedWidthInteger> {
     public init(
         polynomial: Value,
         initialValue: Value = 0,
-        refIn: Bool = false,
-        refOut: Bool = false,
+        reflected: Bool = false,
         xorOut: Value = 0
     ) {
-        self.initialValue = refIn ? initialValue.reversed : initialValue
-        self.refIn = refIn
-        self.refOut = refOut
+        self.initialValue = reflected ? initialValue.reversed : initialValue
+        self.reflected = reflected
         self.xorOut = xorOut
 
         let indices = UInt8.min...UInt8.max
         self.lookupTable = [Value](unsafeUninitializedCapacity: indices.count) { pointer, initializedCapacity in
             var result: Value = 0
-            if refIn {
+            if reflected {
                 let reversedPolynomial = polynomial.reversed
                 for index in indices {
                     result = Value(index).littleEndian
@@ -65,7 +62,7 @@ public struct CRC<Value: FixedWidthInteger> {
     // MARK: Methods
 
     public func calculate<S: Sequence<UInt8>>(for bytes: S, in value: inout Value) {
-        if refIn {
+        if reflected {
             for byte in bytes {
                 let input = Value(byte).littleEndian
                 let index = (input ^ value) & 0xFF
