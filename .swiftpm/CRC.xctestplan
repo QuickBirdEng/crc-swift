@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "14319F7F-D4ED-4C2E-B2D4-97FAE7C6F388",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "CRCTests",
+        "name" : "CRCTests"
+      }
+    }
+  ],
+  "version" : 1
+}
