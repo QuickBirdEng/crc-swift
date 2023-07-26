@@ -9,29 +9,32 @@ import Foundation
 
 public struct VerificationError<Value: FixedWidthInteger>: Error, CustomStringConvertible {
 
+    // MARK: Stored Properties
+
     public let actualValue: Value
     public let expectedValue: Value
 
-    public init(actual: Value, expected: Value) {
-        self.actualValue = actual
-        self.expectedValue = expected
-    }
+    // MARK: Computed Properties
 
     public var description: String {
         "\(String(describing: Self.self))(expected: 0x\(expectedValue.hex), actual: 0x\(actualValue.hex))"
     }
 
+    // MARK: Initialization
+
+    internal init(actual: Value, expected: Value) {
+        self.actualValue = actual
+        self.expectedValue = expected
+    }
+
 }
 
-extension CRC {
+extension Checksum {
 
-    public func verify<S: Sequence<UInt8>>(_ expectedValue: Value, for bytes: S) throws {
-        let actualValue = calculate(for: bytes)
-        guard expectedValue == actualValue else {
-            throw VerificationError(
-                actual: actualValue,
-                expected: expectedValue
-            )
+    public func verify<S: Sequence<UInt8>>(_ expectedValue: Value, for data: S) throws {
+        let actualValue = calculate(for: data)
+        guard actualValue == expectedValue else {
+            throw VerificationError(actual: actualValue, expected: expectedValue)
         }
     }
 
@@ -47,24 +50,6 @@ extension CRCCalculator {
                 expected: expectedValue
             )
         }
-    }
-
-}
-
-extension FixedWidthInteger {
-
-    internal var hex: String {
-        withUnsafeBytes(of: bigEndian) { $0.hex }
-    }
-
-}
-
-extension Sequence<UInt8> {
-
-    internal var hex: String {
-        self
-            .map { String(format: "%02hhX", $0) }
-            .joined()
     }
 
 }

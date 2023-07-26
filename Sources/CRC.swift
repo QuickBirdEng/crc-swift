@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct CRC<Value: FixedWidthInteger> {
+public struct CRC<Value: FixedWidthInteger>: Checksum {
 
     // MARK: Stored Properties
 
