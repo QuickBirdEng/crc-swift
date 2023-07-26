@@ -12,6 +12,11 @@ public struct VerificationError<Value: FixedWidthInteger>: Error, CustomStringCo
     public let actualValue: Value
     public let expectedValue: Value
 
+    public init(actual: Value, expected: Value) {
+        self.actualValue = actual
+        self.expectedValue = expected
+    }
+
     public var description: String {
         "\(String(describing: Self.self))(expected: 0x\(expectedValue.hex), actual: 0x\(actualValue.hex))"
     }
@@ -24,8 +29,8 @@ extension CRC {
         let actualValue = calculate(for: bytes)
         guard expectedValue == actualValue else {
             throw VerificationError(
-                actualValue: actualValue,
-                expectedValue: expectedValue
+                actual: actualValue,
+                expected: expectedValue
             )
         }
     }
@@ -38,8 +43,8 @@ extension CRCCalculator {
         let actualValue = finalValue
         guard expectedValue == actualValue else {
             throw VerificationError(
-                actualValue: actualValue,
-                expectedValue: expectedValue
+                actual: actualValue,
+                expected: expectedValue
             )
         }
     }
