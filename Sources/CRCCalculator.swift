@@ -57,10 +57,12 @@ extension CRCCalculator {
         withUnsafeBytes(of: value.bigEndian) { append($0) }
     }
 
+    #if arch(arm64)
     @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
     public mutating func append(bigEndian value: Float16) {
         append(bigEndian: value.bitPattern)
     }
+    #endif
 
     public mutating func append(bigEndian value: Float32) {
         append(bigEndian: value.bitPattern)
