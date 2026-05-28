@@ -1,11 +1,8 @@
 //
-//  File.swift
-//  
+// Hex.swift
 //
-//  Created by Paul Kraft on 26.07.23.
+// Copyright © 2023 QuickBird Studios. All rights reserved.
 //
-
-import Foundation
 
 extension FixedWidthInteger {
 
@@ -19,7 +16,11 @@ extension Sequence<UInt8> {
 
     internal var hex: String {
         self
-            .map { String(format: "%02hhX", $0) }
+            .map { byte -> String in
+                let high = String(byte >> 4, radix: 16, uppercase: true)
+                let low = String(byte & 0x0F, radix: 16, uppercase: true)
+                return high + low
+            }
             .joined()
     }
 
