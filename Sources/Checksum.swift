@@ -9,11 +9,11 @@
 /// ``CRC`` is the only conforming type shipped with this package, but the
 /// protocol exists so that the ``verify(_:for:)-`` extension applies to any
 /// future checksum algorithm.
-public protocol Checksum {
+public protocol Checksum: Sendable {
 
     /// The integer type produced by ``calculate(for:)``. Its bit width
     /// determines the width of the checksum (e.g. `UInt32` ⇒ a 32-bit checksum).
-    associatedtype Value: FixedWidthInteger
+    associatedtype Value: FixedWidthInteger & Sendable
 
     /// Computes the checksum of the given bytes in one shot.
     ///

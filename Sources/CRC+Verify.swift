@@ -7,7 +7,7 @@
 /// The error thrown by ``Checksum/verify(_:for:)`` and
 /// ``CRCCalculator/verify(_:)`` when the computed checksum does not match
 /// the expected value.
-public struct VerificationError<Value: FixedWidthInteger>: Error, CustomStringConvertible {
+public struct VerificationError<Value: FixedWidthInteger & Sendable>: Error, CustomStringConvertible {
 
     // MARK: Stored Properties
 
@@ -33,7 +33,7 @@ public struct VerificationError<Value: FixedWidthInteger>: Error, CustomStringCo
 
 }
 
-extension VerificationError: Sendable where Value: Sendable {}
+extension VerificationError: Sendable {}
 
 extension Checksum {
 

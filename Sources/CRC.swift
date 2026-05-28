@@ -15,7 +15,7 @@
 /// A 256-entry lookup table is computed once in ``init(polynomial:initialValue:reflected:xorOut:)``
 /// and reused for every subsequent ``calculate(for:)``, so reusing the same
 /// `CRC` instance across many payloads is cheap.
-public struct CRC<Value: FixedWidthInteger>: Checksum {
+public struct CRC<Value: FixedWidthInteger & Sendable>: Checksum {
 
     // MARK: Stored Properties
 
@@ -147,7 +147,7 @@ public struct CRC<Value: FixedWidthInteger>: Checksum {
 
 }
 
-extension CRC: Sendable where Value: Sendable {}
+extension CRC: Sendable {}
 
 extension FixedWidthInteger {
 

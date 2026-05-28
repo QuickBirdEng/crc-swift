@@ -7,7 +7,7 @@
 import XCTest
 @testable import CRC
 
-class CRCTestCase<Value: FixedWidthInteger>: XCTestCase {
+class CRCTestCase<Value: FixedWidthInteger & Sendable>: XCTestCase {
 
     func printLookupTable(for crc: CRC<Value>) {
         let lookupTable = crc.lookupTable

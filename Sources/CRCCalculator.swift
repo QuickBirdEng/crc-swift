@@ -26,7 +26,7 @@ public typealias CRC64Calculator = CRCCalculator<UInt64>
 /// `CRCCalculator` is a value type: copying it snapshots the current progress,
 /// which is useful when you need to compute a CRC over a prefix of a stream
 /// without consuming the rest.
-public struct CRCCalculator<Value: FixedWidthInteger> {
+public struct CRCCalculator<Value: FixedWidthInteger & Sendable> {
 
     // MARK: Stored Properties
 
@@ -115,4 +115,4 @@ extension CRCCalculator {
 
 }
 
-extension CRCCalculator: Sendable where Value: Sendable {}
+extension CRCCalculator: Sendable {}

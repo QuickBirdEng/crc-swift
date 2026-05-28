@@ -17,7 +17,7 @@ A small, dependency-free Swift package for computing CRC-8, CRC-16, CRC-32, and 
 - `Checksum` protocol with a throwing `verify(_:for:)` that raises `VerificationError` on mismatch.
 - Pre-computed 256-entry lookup table generated once per `CRC` instance.
 - No dependencies, not even `Foundation`.
-- Swift 6 ready — builds under strict concurrency and conditionally conforms `CRC`, `CRCCalculator`, and `VerificationError` to `Sendable`.
+- Swift 6 ready — builds under strict concurrency, and `Checksum`, `CRC`, `CRCCalculator`, and `VerificationError` are all `Sendable`.
 
 ## Installation
 
