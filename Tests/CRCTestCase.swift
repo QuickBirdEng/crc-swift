@@ -7,7 +7,7 @@
 import XCTest
 @testable import CRC
 
-class CRCTestCase<Value: FixedWidthInteger>: XCTestCase {
+class CRCTestCase<Value: FixedWidthInteger & Sendable>: XCTestCase {
 
     func printLookupTable(for crc: CRC<Value>) {
         let lookupTable = crc.lookupTable
@@ -46,12 +46,11 @@ class CRCTestCase<Value: FixedWidthInteger>: XCTestCase {
                         XCTAssertEqual(error.expectedValue, wrongResult)
                         XCTAssertEqual(error.actualValue, expectedResult)
 
-                        let prefix = "VerificationError<" + String(describing: Value.self) + ">"
                         let expectedString = "expected: 0x" + wrongResult.hex
                         let actualString = "actual: 0x" + actualResult.hex
                         XCTAssertEqual(
                             String(describing: error),
-                            prefix + "(" + expectedString + ", " + actualString + ")"
+                            "Checksum verification failed (" + expectedString + ", " + actualString + ")"
                         )
                     default:
                         XCTFail("Unexpected error: \(error)")
@@ -83,12 +82,11 @@ class CRCTestCase<Value: FixedWidthInteger>: XCTestCase {
                         XCTAssertEqual(error.expectedValue, wrongResult)
                         XCTAssertEqual(error.actualValue, expectedResult)
 
-                        let prefix = "VerificationError<" + String(describing: Value.self) + ">"
                         let expectedString = "expected: 0x" + wrongResult.hex
                         let actualString = "actual: 0x" + actualResult.hex
                         XCTAssertEqual(
                             String(describing: error),
-                            prefix + "(" + expectedString + ", " + actualString + ")"
+                            "Checksum verification failed (" + expectedString + ", " + actualString + ")"
                         )
                     default:
                         XCTFail("Unexpected error: \(error)")
